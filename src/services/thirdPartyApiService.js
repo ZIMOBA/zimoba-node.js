@@ -3,9 +3,17 @@
 // rate limit, retry transient failures with backoff, and wrap the
 // whole thing in a circuit breaker so a dead upstream doesn't take
 // your app down with it.
+//
+// NOTE: we import fetch from 'undici' explicitly rather than using
+// Node's global fetch. Node's global fetch runs on its own internal
+// copy of undici, which can be a different instance from the
+// 'undici' npm package our tests use to mock requests with
+// MockAgent. Importing fetch from the same package guarantees the
+// test's mocked dispatcher is actually the one used here.
 const Bottleneck = require('bottleneck');
 const pRetry = require('p-retry');
 const CircuitBreaker = require('opossum');
+const { fetch } = require('undici');
 const { thirdPartyApiBaseUrl, thirdPartyApiKey } = require('../config/env');
 const logger = require('../utils/logger');
 

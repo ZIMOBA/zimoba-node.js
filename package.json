@@ -26,11 +26,12 @@
     "mongoose": "^8.5.1",
     "node-cache": "^5.1.2",
     "opossum": "^8.1.4",
-    "p-retry": "^6.2.0",
+    "p-retry": "^4.6.2",
     "pino": "^9.3.2",
     "pino-http": "^10.2.0",
     "pino-pretty": "^11.2.2",
-    "socket.io": "^4.7.5"
+    "socket.io": "^4.7.5",
+    "undici": "^7.29.1"
   },
   "devDependencies": {
     "eslint": "^8.57.0",

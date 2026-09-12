@@ -18,3 +18,8 @@ describe('unknown route', () => {
     expect(res.statusCode).toBe(404);
   });
 });
+
+afterAll(async () => {
+  const redisClient = require('../src/config/redis');
+  await redisClient.quit();
+});
