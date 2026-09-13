@@ -22,4 +22,12 @@ const authLimiter = rateLimit({
   message: { error: 'Too many attempts, please try again later.' },
 });
 
-module.exports = { apiLimiter, authLimiter };
+const resendLimiter = rateLimit({
+  windowMs: 10 * 60 * 1000,
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Lancez une autre essaye dans 10 minutes" }
+})
+
+module.exports = { apiLimiter, authLimiter, resendLimiter };

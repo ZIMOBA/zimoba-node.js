@@ -14,6 +14,7 @@ const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const webhookRoutes = require('./routes/webhookRoutes');
 const healthRoutes = require('./routes/healthRoutes');
+const resendEmail = require("./routes/resendRoutes")
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use(apiLimiter);
 app.use('/health', healthRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/email', resendEmail);
 
 // 404 for anything unmatched
 app.use((req, res) => {

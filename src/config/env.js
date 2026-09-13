@@ -30,4 +30,6 @@ module.exports = {
 
   sentryDsn: process.env.SENTRY_DSN || null,
   logLevel: process.env.LOG_LEVEL || 'info',
+  resendApiKey: process.env.RESEND_PRODKEY,
+  resendUrl: process.env.RESEND_BASE_URL || 'https://api.resend.com',
 };

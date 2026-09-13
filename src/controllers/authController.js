@@ -3,16 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const { jwtSecret, refreshSecret } = require('../config/env');
 const { asyncHandler } = require('../middleware/errorHandler');
-
-function issueTokens(user) {
-  const accessToken = jwt.sign({ userId: user._id }, jwtSecret, { expiresIn: '15m' });
-  const refreshToken = jwt.sign(
-    { userId: user._id, version: user.refreshTokenVersion },
-    refreshSecret,
-    { expiresIn: '7d' }
-  );
-  return { accessToken, refreshToken };
-}
+const { issueTokens } = require('../utils/jwt');
 
 const register = asyncHandler(async (req, res) => {
   const { email, password, name } = req.body;
