@@ -13,8 +13,12 @@ const verificationCodeSchema = new mongoose.Schema(
       trim: true,
     },
     code: { type: String, default: null },
+    codeCreatedAt: {
+      type: Date,
+      default: null,
+    },
   },
-  { timestamps: true } 
+  { timestamps: true }
 );
 
 const VerificationCode = mongoose.model("VerificationCode", verificationCodeSchema);

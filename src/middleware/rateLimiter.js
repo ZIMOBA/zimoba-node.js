@@ -12,8 +12,7 @@ const apiLimiter = rateLimit({
   message: { error: 'Too many requests, please try again later.' },
 });
 
-// Stricter limiter for sensitive routes like login, where brute
-// forcing is a real risk.
+
 const authLimiter = rateLimit({
   windowMs: 10 * 60 * 1000,
   max: 10,
@@ -24,10 +23,10 @@ const authLimiter = rateLimit({
 
 const resendLimiter = rateLimit({
   windowMs: 10 * 60 * 1000,
-  max: 10,
+  max: 3,
   standardHeaders: true,
   legacyHeaders: false,
-  message: { error: "Lancez une autre essaye dans 10 minutes" }
+  message: { error: "Try again in 10 minutes" }
 })
 
 module.exports = { apiLimiter, authLimiter, resendLimiter };

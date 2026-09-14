@@ -25,7 +25,7 @@ const sendCode = asyncHandler(async (req, res) => {
 
   await VerificationCode.findOneAndUpdate(
     { email },
-    { $set: { code: hashedCode, createdAt: new Date() } },
+    { $set: { code: hashedCode, codeCreatedAt: new Date() } },
     { upsert: true, new: true }
   );
 
@@ -62,27 +62,26 @@ const verifyCode = asyncHandler(async (req, res) => {
 
   const email = receiverEmail.toLowerCase().trim();
 
-  // email is unique now, so there's at most one record - no need to sort
   const record = await VerificationCode.findOne({ email });
 
-  if (!record || !record.code) {
+  if (!record || !record.code || !record.codeCreatedAt) {
     return res.status(400).json({ success: false, message: "Code invalide ou expiré" });
   }
 
-  const isExpired = Date.now() - record.createdAt.getTime() > EXPIRES_AFTER_MS;
+  const isExpired = Date.now() - record.codeCreatedAt.getTime() > EXPIRES_AFTER_MS;
 
   if (isExpired) {
-    await VerificationCode.findByIdAndUpdate(record._id, { code: null });
+    await VerificationCode.findByIdAndUpdate(record._id, { code: null, codeCreatedAt: null });
     return res.status(400).json({ success: false, message: "Code expiré" });
   }
 
-  const isMatch = await bcrypt.compare(code, record.code);
+  const isMatch = await bcrypt.compare(code.trim(), record.code);
 
   if (!isMatch) {
     return res.status(400).json({ success: false, message: "Code invalide" });
   }
 
-  await VerificationCode.findByIdAndUpdate(record._id, { code: null });
+  await VerificationCode.findByIdAndUpdate(record._id, { code: null, codeCreatedAt: null });
 
   return res.json({ success: true, message: "Code vérifié avec succès" });
 });
