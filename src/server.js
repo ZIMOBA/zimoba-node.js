@@ -1,7 +1,3 @@
-// Entry point. This is the only file that actually starts anything:
-// connects the DB, creates the HTTP server, attaches Socket.io, and
-// listens. Keeping this separate from app.js is what lets app.js be
-// unit-tested with supertest without opening a real port.
 const http = require('http');
 const { port, nodeEnv } = require('./config/env');
 const connectDB = require('./config/db');

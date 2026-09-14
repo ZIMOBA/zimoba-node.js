@@ -1,7 +1,3 @@
-// Pure Express app setup: middleware + routes. No listening here,
-// no socket/server wiring here. That separation is what makes this
-// file importable directly into tests (see tests/user.test.js)
-// without spinning up a real network port.
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
